@@ -1,5 +1,5 @@
 const {Model,DataTypes} = require('sequelize');
-const sequelize = new Sequelize('./db');
+const sequelize = require('./db');
 
 class Departamento extends Model {}
 

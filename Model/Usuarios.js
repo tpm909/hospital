@@ -1,5 +1,5 @@
 const {Model,DataTypes} = require('sequelize');
-const sequelize = new Sequelize('./db');
+const sequelize = require('./db');
 const Departamento = require('./Departamento')
 
 
@@ -12,7 +12,8 @@ Usuario.init(
         allowNull:false
      },
      contraseña: {
-
+        type:DataTypes.INTEGER,
+        allowNull:false
      }    
     },{
         sequelize,
@@ -20,7 +21,7 @@ Usuario.init(
         tableName: 'usuario',
     }
 )
-//relacion 1..n
+//relacion 1..n un usuario puede pertenecer solo a 1 departamento y un departamento puede tener muchos usuarios
 Departamento.hasMany(Usuario,{ foreignKey: 'dep_id'});
 Usuario.belongsTo(Departamento,{foreignKey: 'dep_id'})
 

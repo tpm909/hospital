@@ -1,7 +1,7 @@
 {
-  "name": "app",
+  "name": "hospital",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,10 @@
   "homepage": "https://github.com/tpm909/hospital#readme",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mysql2": "^3.14.1",
+    "nodemon": "^3.1.10",
+    "pug": "^3.0.3",
+    "sequelize": "^6.37.7"
   }
 }

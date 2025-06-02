@@ -7,11 +7,11 @@ class Sintomas extends Model {}
 Sintomas.init(
     {
         nombre :{
-           type: DataTypes.ARRAY,
+           type: DataTypes.STRING,
            allowNull:false
         },
          descripcion :{
-           type: DataTypes.ARRAY,
+           type: DataTypes.STRING,
            allowNull:false
         }
     },{
@@ -20,5 +20,7 @@ Sintomas.init(
         tableName: 'Sintomas',
     }
 )
+
+
 
 module.exports = Sintomas

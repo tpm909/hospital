@@ -7,11 +7,11 @@ class Tratamientos extends Model {}
 Tratamientos.init(
     {
         descripcion :{
-           type: DataTypes.ARRAY,
+           type: DataTypes.STRING,
            allowNull:false
         },
          medicamentos :{
-           type: DataTypes.ARRAY,
+           type: DataTypes.STRING,
            allowNull:false
         }
     },{

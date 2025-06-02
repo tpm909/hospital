@@ -7,11 +7,11 @@ class Enfermedades extends Model {}
 Enfermedades.init(
     {
         nombre :{
-           type: DataTypes.ARRAY,
+           type: DataTypes.STRING,
            allowNull:false
         },
          descripcion :{
-           type: DataTypes.ARRAY,
+           type: DataTypes.STRING,
            allowNull:false
         }
     },{

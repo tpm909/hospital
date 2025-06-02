@@ -7,11 +7,11 @@ class Tipo_ingreso extends Model {}
 Tipo_ingreso.init(
     {
         nombre :{
-           type: DataTypes.ARRAY,
+           type: DataTypes.STRING,
            allowNull:false
         },
          descripcion :{
-           type: DataTypes.ARRAY,
+           type: DataTypes.STRING,
            allowNull:false
         }
     },{

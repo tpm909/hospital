@@ -7,7 +7,7 @@ class Seguros extends Model {}
 Seguros.init(
     {
         nombre :{
-           type: DataTypes.ARRAY,
+           type: DataTypes.STRING,
            allowNull:false
         }
     },{

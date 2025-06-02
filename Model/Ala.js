@@ -7,7 +7,7 @@ class Ala extends Model {}
 Ala.init(
     {
         nombre :{
-           type: DataTypes.ARRAY,
+           type: DataTypes.STRING,
            allowNull:false
         }
     },{

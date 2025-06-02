@@ -7,8 +7,8 @@ class Paciente extends Model {}
 
 Paciente.init(
     {
-        nombre_apellido: {
-            tupe:DataTypes.STRING
+        nombre: {
+            type:DataTypes.STRING
         },
         DNI: {
             type:DataTypes.INTEGER

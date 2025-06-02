@@ -26,8 +26,8 @@ Ingreso.belongsTo(Paciente,{foreignKey:'id_paciente'})
 Tipo_ingreso.hasMany(Ingreso,{foreignKey: 'id_TI'})
 Ingreso.belongsTo(Tipo_ingreso,{foreignKey: 'id_TI'})
 
-Sintomas.belongsToMany(Ingreso,{foreignKey: 'id_Sintomas'})
-Ingreso.belongsToMany(Sintomas,{foreignKey:'id_sintomas'})
+Sintomas.belongsToMany(Ingreso,{through: 'id_Sintomas'})
+Ingreso.belongsToMany(Sintomas,{through:'Sintomas_ingreso'})
 
 
 module.exports = Ingreso

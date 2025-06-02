@@ -1,10 +1,10 @@
 const { Sequelize } = require('sequelize');
 
 
-const  Sequelize  = new sequelize(
-    'Hospitalbd',
+const  sequelize  = new Sequelize(
+    'hospitalbd',
     'root',
-    'admin',
+    '',
     {
         host: 'localhost',
         dialect: 'mysql',
@@ -12,4 +12,4 @@ const  Sequelize  = new sequelize(
     }
 );
 
-module.exports = Sequelize
+module.exports = sequelize

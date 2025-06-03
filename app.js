@@ -8,6 +8,8 @@ const pug = require('pug')
 //routes
 
 const indexRoute = require('./routing/indexRoute')
+const usuarioR = require('./routing/usuarioRoute')
+const pacienteR = require('./routing/pacienteRoute')
 
 const app = express()
 
@@ -29,6 +31,8 @@ app.set('view engine','pug')
 //uso de las rutas
 
 app.use('/',indexRoute)
+app.use('/usuario',usuarioR)
+app.use('/paciente',pacienteR)
 
 //errores
 

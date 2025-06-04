@@ -20,8 +20,10 @@ app.set('view engine','pug')
 
 
 
-//middleware
-
+//middleware para el formulario
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public')) //es para que express sirva a los archivos estaticos
 
 
 //middleware para pasar variables a las vistas
@@ -31,8 +33,8 @@ app.set('view engine','pug')
 //uso de las rutas
 
 app.use('/',indexRoute)
-app.use('/usuario',usuarioR)
-app.use('/paciente',pacienteR)
+app.use('/usuarios',usuarioR)
+app.use('/pacientes',pacienteR)
 
 //errores
 

@@ -12,6 +12,8 @@ block content
         th(style='border: 1px solid #000;') Sexo
         th(style='border: 1px solid #000;') Fecha de nacimiento
         th(style='border: 1px solid #000;') Teléfono
+        th(style='border: 1px solid #000;') Email
+        th(style='border: 1px solid #000;') Direccion
         th(style='border: 1px solid #000;') Seguro
     tbody
       each paciente in pacientes
@@ -20,7 +22,9 @@ block content
           td(style='border: 1px solid #000;') #{paciente.DNI}
           td(style='border: 1px solid #000;') #{paciente.sexo}
           td(style='border: 1px solid #000;') #{paciente.fecha_nacimiento ? paciente.fecha_nacimiento.toISOString().substring(0,10) : ''}
-          td(style='border: 1px solid #000;') #{paciente.Contacto ? paciente.Contacto.telefono : 'Sin contacto'}
+          td(style='border: 1px solid #000;') #{paciente.Contacto ? paciente.Contacto.telefono : 'Sin telfono'}
+          td(style='border: 1px solid #000;') #{paciente.Contacto ? paciente.Contacto.email : 'Sin Email'}
+          td(style='border: 1px solid #000;') #{paciente.Contacto ? paciente.Contacto.dirreccion : 'Sin dirreccion'}
           td(style='border: 1px solid #000;') #{paciente.Seguro ? paciente.Seguro.nombre : 'Sin seguro'}
 
   if error

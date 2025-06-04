@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  h1 Registrar el ingreso del paciente
+
+  if error
+    p(style='color: red;') #{error}
+  else if paciente
+    ul
+      li Nombre: #{paciente.nombre}
+      li DNI: #{paciente.DNI}
+      li Sexo: #{paciente.sexo}
+      li Fecha de nacimiento: #{paciente.fecha_nacimiento}
+      li Telefono: #{paciente.Contacto ? paciente.Contacto.telefono : 'sin telefono'}
+      li Email: #{paciente.Contacto ? paciente.Contacto.email : 'sin Email'}
+      li Direccion: #{paciente.Contacto ? paciente.Contacto.dirreccion : 'sin Direccion'}
+      li Fecha de nacimiento: #{paciente.Seguro ? paciente.Seguro.nombre : 'Sin seguro'}
+

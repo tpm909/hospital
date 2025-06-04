@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  form#formulario(action='/pacientes/buscar', method='POST')
+    input#input(type='text', name='DNI', placeholder='Ingrese DNI')
+    button#buscar(type='submit') Buscar
+    botton#registrar(type='button', style='display:none') Crear paciente
+ 
+
+  script(src='/Scripts/btnCrearPaciente.js')

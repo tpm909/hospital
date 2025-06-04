@@ -35,7 +35,7 @@ async function crear(req, res) {
     } catch (error) {
         console.error(error);
     res.status(500).render('pacientes/formulario', {
-      error: 'Error al crear el usuario'
+      error: 'Error al crear el paciente'
     });
     }
 }
@@ -58,8 +58,65 @@ async function Listar(req, res) {
     }
 }
 
+async function formulario(req, res) {
+  res.render('pacientes/formulario');
+}
+
+async function inicio(req, res) {
+    res.render('ingreso/inicio')    
+}
+
+async function buscarRedirect(req, res) {    
+    const dni = req.body.DNI
+    try{
+        const paciente = await Paciente.findOne({
+            where:{
+                dni
+            },
+            include: [
+                {model: Contacto},
+                {model: Seguro}
+            ]
+        })        
+        res.redirect(`/pacientes/buscar/${dni}`);
+    } catch (error) {
+        console.error(error)
+        res.status(500).render("ingreso/inicio",{
+            error: "paciente no encontrado"
+        })
+    }
+}
+
+async function buscar(req, res) {    
+    const dni = req.params.DNI
+    try{
+        const paciente = await Paciente.findOne({
+            where:{
+                dni
+            },
+            include: [
+                {model: Contacto},
+                {model: Seguro}
+            ]
+        })
+        
+        res.render('ingreso/Ingreso',{ paciente })
+    } catch (error) {
+        console.error(error)
+        res.status(500).render("ingreso/inicio",{
+            error: "paciente no encontrado"
+        })
+    }
+}
+
+
 
 
 module.exports = {
-    Listar
+    Listar,
+    crear,
+    formulario,
+    buscar,
+    inicio,
+    buscarRedirect
 }

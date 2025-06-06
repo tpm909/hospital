@@ -14,5 +14,25 @@ block content
       li Telefono: #{paciente.Contacto ? paciente.Contacto.telefono : 'sin telefono'}
       li Email: #{paciente.Contacto ? paciente.Contacto.email : 'sin Email'}
       li Direccion: #{paciente.Contacto ? paciente.Contacto.dirreccion : 'sin Direccion'}
-      li Fecha de nacimiento: #{paciente.Seguro ? paciente.Seguro.nombre : 'Sin seguro'}
+      li Seguro: #{paciente.Seguro ? paciente.Seguro.nombre : 'Sin seguro'}
+  form(action=`/pacientes/ingreso/${dni}`, method='POST') 
 
+   input(type='hidden', name='idp', value=paciente.id)
+   
+   label Sintomas:
+   if sintomas && sintomas.length
+     each sintoma in sintomas
+       label
+         input(type='checkbox', name='sintomas', value=sintoma)
+         | #{sintoma.nombre}
+       br
+   else
+     p No hay sintomas disponibles.
+   br
+   label Tipos de ingreso:
+     select(name='Tipo_de_ingreso', required)
+       option(value='') Tipos de ingreso
+       each tipos_de_ingreso in TI
+         option(value=tipos_de_ingreso.id)= tipos_de_ingreso.nombre
+     br
+   button(type='submit') Registrar ingreso

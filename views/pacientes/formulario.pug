@@ -23,7 +23,28 @@ block content
     input(type='date', name='fecha_nacimiento', required)
     br
 
+    label Telefono: 
+    input(type='text', name='telefono', required) 
+    br
+
+    label Email: 
+    input(type='email', name='email', required) 
+    br
+
+    label dirreccion: 
+    input(type='text', name='dirreccion', required) 
+    br
+
+    label Seguro:
+    select(name='Seguro_id', required)
+      option(value='') Selecciona un seguro
+      each seguro in seguros
+        option(value=seguro.id)= seguro.nombre
+    br
+    
     button(type='submit') Registrar
+    
+    
 
   if error
     p(style='color: red;') #{error}

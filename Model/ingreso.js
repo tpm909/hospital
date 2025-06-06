@@ -26,7 +26,7 @@ Ingreso.belongsTo(Paciente,{foreignKey:'id_paciente'})
 Tipo_ingreso.hasMany(Ingreso,{foreignKey: 'id_TI'})
 Ingreso.belongsTo(Tipo_ingreso,{foreignKey: 'id_TI'})
 
-Sintomas.belongsToMany(Ingreso,{through: 'id_Sintomas'})
+Sintomas.belongsToMany(Ingreso,{through: 'Sintomas_ingreso'})
 Ingreso.belongsToMany(Sintomas,{through:'Sintomas_ingreso'})
 
 

@@ -1,0 +1,88 @@
+extends ../layout.pug 
+
+block content
+
+  h1 Paciente
+  if error
+    p(style='color: red;') #{error}
+  else if paciente
+    ul
+      li Nombre: #{paciente.nombre}
+      li DNI: #{paciente.DNI}
+      li Sexo: #{paciente.sexo}
+      li Fecha de nacimiento: #{paciente.fecha_nacimiento}
+      li Telefono: #{paciente.Contacto ? paciente.Contacto.telefono : 'sin telefono'}
+      li Email: #{paciente.Contacto ? paciente.Contacto.email : 'sin Email'}
+      li Direccion: #{paciente.Contacto ? paciente.Contacto.dirreccion : 'sin Direccion'}
+      li Seguro: #{paciente.Seguro ? paciente.Seguro.nombre : 'Sin seguro'}
+
+  h1 Historial
+
+  // Combo para seleccionar tabla
+  label(for='selectorTabla') Selecciona tabla:
+  select#selectorTabla
+    option(value='tablaIngresos', selected) Ingresos
+    option(value='tablaInternaciones') Internaciones
+    option(value='tablaDiagnosticos') Diagnósticos
+
+
+
+  // Estilo DataTables
+  link(rel='stylesheet', href='https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css')
+
+  //tabla de ingresos
+  table#tablaIngresos.display
+    thead
+      tr
+        th Fecha del ingreso
+        th Emitido Por
+        th Tipo de ingreso
+        
+    tbody
+      each ingreso in ingresos
+        tr
+          td #{ingreso.createdAt}
+          td #{ingreso.usuario}
+          td #{ingreso.Tipos_ingreso.nombre}
+
+  //tabla de internaciones
+  table#tablaInternaciones.display(style='display: none;')
+    thead
+      tr
+        th Otro campo 1
+        th Otro campo 2
+    tbody
+      // Aquí podrías tener otros datos
+      tr
+        td Valor 1
+        td Valor 2
+
+  //tabla de diagnosticos
+  table#tablaDiagnosticos.display(style='display: none;')
+    thead
+      tr
+        th Doctor
+        th Tratamiento 
+        th Enfermedad 
+
+    tbody
+      // Aquí podrías tener otros datos
+      tr
+        td Valor 1
+        td Valor 2
+        td Valor 3        
+
+
+
+
+
+
+  if error
+    p(style='color: red;') #{error}
+
+  // Scripts
+  script(src='https://code.jquery.com/jquery-3.7.1.min.js')
+  script(src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js')
+  script(src='/Scripts/HistorialScript.js')
+  
+

@@ -9,8 +9,12 @@ router.get('/nuevo',pacienteController.formulario)
 router.post('/nuevo',pacienteController.crear)
 router.get('/ingreso',pacienteController.inicio)
 router.post('/ingreso',pacienteController.buscarRedirect)
-router.get('/ingreso/:DNI',pacienteController.buscar)
-router.post('/ingreso/:DNI',ingresoController.crear)
+router.get('/ingreso/:DNI/crear',pacienteController.buscar)
+router.post('/ingreso/:DNI/crear',ingresoController.crear)
+router.get('/historial',pacienteController.historial)
+router.get('/ver',pacienteController.ver)
+
+
 
 
 module.exports = router;

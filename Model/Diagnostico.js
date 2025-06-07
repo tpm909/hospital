@@ -9,7 +9,9 @@ class Diagnostico extends Model { }
 
 Diagnostico.init(
     {
-
+    detalles:{
+            type:DataTypes.STRING
+        }
     }, {
     sequelize,
     modelName: 'Diagnostico',

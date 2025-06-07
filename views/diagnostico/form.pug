@@ -1,0 +1,39 @@
+extends ../layout
+
+block content
+  h1 Registrar nuevo paciente
+
+  form(action='/diagnostico/crear', method='POST')
+    
+    label Tratamientos:
+    br
+    select(name='Tratamiento_id')
+      option(value='') Selecciona un tratamiento
+      each tratamiento in tratamientos
+        option(value=tratamiento.id,selected=tratamiento.id == 1 )= tratamiento.descripcion      
+    br
+
+    label Enfermedades:
+    br
+    select(name='Enfermedad_id')
+      option(value='') Selecciona una enfermedad
+      each enfermedad in enfermedades
+        option(value=enfermedad.id,selected=enfermedad.id == 1)= enfermedad.nombre    
+    br
+   
+    label Detalles:
+     input(type='text', name='detalles', required)
+    br
+    label  Internacion
+      input(type='checkbox', name='internacion')
+    br
+    input(type='hidden', name='paciente', value=paciente.id)
+    button(type='submit') Registrar
+    
+    
+
+  if error
+    p(style='color: red;') #{error}
+
+  if success
+    p(style='color: green;') #{success}

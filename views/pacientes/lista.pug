@@ -4,29 +4,55 @@ block content
   h1 Lista de Pacientes
   a(href='/pacientes/nuevo') Nuevo paciente
 
-  table(style='border-collapse: collapse; width: 100%;')
+  a(href='/paciente/editar') Editar Paciente
+
+  // Estilo DataTables
+  link(rel='stylesheet', href='https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css')
+
+  table#tablaPacientes.display
     thead
       tr
-        th(style='border: 1px solid #000;') Nombre
-        th(style='border: 1px solid #000;') DNI
-        th(style='border: 1px solid #000;') Sexo
-        th(style='border: 1px solid #000;') Fecha de nacimiento
-        th(style='border: 1px solid #000;') Teléfono
-        th(style='border: 1px solid #000;') Email
-        th(style='border: 1px solid #000;') Direccion
-        th(style='border: 1px solid #000;') Seguro
+        th Nombre
+        th DNI
+        th Sexo
+        th Fecha de nacimiento
+        th Teléfono
+        th Email
+        th Dirección
+        th Seguro
+        th 
     tbody
       each paciente in pacientes
         tr
-          td(style='border: 1px solid #000;') #{paciente.nombre}
-          td(style='border: 1px solid #000;') #{paciente.DNI}
-          td(style='border: 1px solid #000;') #{paciente.sexo}
-          td(style='border: 1px solid #000;') #{paciente.fecha_nacimiento ? paciente.fecha_nacimiento.toISOString().substring(0,10) : ''}
-          td(style='border: 1px solid #000;') #{paciente.Contacto ? paciente.Contacto.telefono : 'Sin telfono'}
-          td(style='border: 1px solid #000;') #{paciente.Contacto ? paciente.Contacto.email : 'Sin Email'}
-          td(style='border: 1px solid #000;') #{paciente.Contacto ? paciente.Contacto.dirreccion : 'Sin dirreccion'}
-          td(style='border: 1px solid #000;') #{paciente.Seguro ? paciente.Seguro.nombre : 'Sin seguro'}
+          td #{paciente.nombre}
+          td #{paciente.DNI}
+          td #{paciente.sexo}
+          td #{paciente.fecha_nacimiento ? paciente.fecha_nacimiento.toISOString().substring(0,10) : ''}
+          td #{paciente.Contacto ? paciente.Contacto.telefono : 'Sin teléfono'}
+          td #{paciente.Contacto ? paciente.Contacto.email : 'Sin email'}
+          td #{paciente.Contacto ? paciente.Contacto.direccion : 'Sin dirección'}
+          td #{paciente.Seguro ? paciente.Seguro.nombre : 'Sin seguro'}
+          td 
+            form(action=`/pacientes/ver`, method='get', style='display:inline')
+             input(type='hidden', name='id', value=paciente.id)
+             button(type='submit') Ver
+
+
+
+
+  
 
   if error
     p(style='color: red;') #{error}
 
+  // scripts
+  script(src='https://code.jquery.com/jquery-3.7.1.min.js')
+  script(src='https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js')
+  script.
+    $(document).ready(function () {
+      $('#tablaPacientes').DataTable({
+        language: {
+          url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+        }
+      });
+    });

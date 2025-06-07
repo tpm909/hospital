@@ -15,24 +15,12 @@ block content
       li Email: #{paciente.Contacto ? paciente.Contacto.email : 'sin Email'}
       li Direccion: #{paciente.Contacto ? paciente.Contacto.dirreccion : 'sin Direccion'}
       li Seguro: #{paciente.Seguro ? paciente.Seguro.nombre : 'Sin seguro'}
-  form(action=`/pacientes/ingreso/${dni}/crear`, method='POST') 
-
-   input(type='hidden', name='idp', value=paciente.id)
-   
-   label Sintomas:
-   if sintomas && sintomas.length
-     each sintoma in sintomas
-       label
-         input(type='checkbox', name='sintomas', value=sintoma)
-         | #{sintoma.nombre}
-       br
-   else
-     p No hay sintomas disponibles.
-   br
-   label Tipos de ingreso:
-     select(name='Tipo_de_ingreso', required)
-       option(value='') Tipos de ingreso
-       each tipos_de_ingreso in TI
-         option(value=tipos_de_ingreso.id)= tipos_de_ingreso.nombre
+      br
+  form(action=`/pacientes/historial`, method='get', style='display:inline')
+     input(type='hidden', name='id', value=paciente.id)
+     button(type='submit') Historial
      br
-   button(type='submit') Registrar ingreso
+     
+  form(action=`/diagnostico/crear`, method='get', style='display:inline')
+     input(type='hidden', name='id', value=paciente.id)
+     button(type='submit') Diagnosticar

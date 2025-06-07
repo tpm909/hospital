@@ -10,6 +10,7 @@ const pug = require('pug')
 const indexRoute = require('./routing/indexRoute')
 const usuarioR = require('./routing/usuarioRoute')
 const pacienteR = require('./routing/pacienteRoute')
+const diagnosticoR = require('./routing/diagosticoRoute')
 
 const app = express()
 
@@ -35,6 +36,8 @@ app.use(express.static('public')) //es para que express sirva a los archivos est
 app.use('/',indexRoute)
 app.use('/usuarios',usuarioR)
 app.use('/pacientes',pacienteR)
+app.use('/diagnostico',diagnosticoR)
+
 
 //errores
 

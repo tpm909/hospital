@@ -10,6 +10,10 @@ Camas.init(
         ocupada: {
             type:DataTypes.BOOLEAN,
             allowNull:false            
+        },
+        limpia: {//se refiere al estado de una habitacion si es true es que esta limpia
+            type: DataTypes.BOOLEAN,
+            allowNull: false
         }
 
 },{

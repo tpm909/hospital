@@ -10,7 +10,7 @@ block content
     select(name='Tratamiento_id')
       option(value='') Selecciona un tratamiento
       each tratamiento in tratamientos
-        option(value=tratamiento.id,selected=tratamiento.id == 1 )= tratamiento.descripcion      
+        option(value=tratamiento.id, selected=tratamiento.id == 1)= tratamiento.descripcion      
     br
 
     label Enfermedades:
@@ -18,22 +18,59 @@ block content
     select(name='Enfermedad_id')
       option(value='') Selecciona una enfermedad
       each enfermedad in enfermedades
-        option(value=enfermedad.id,selected=enfermedad.id == 1)= enfermedad.nombre    
+        option(value=enfermedad.id, selected=enfermedad.id == 1)= enfermedad.nombre    
     br
    
     label Detalles:
-     input(type='text', name='detalles', required)
+      input(type='text', name='detalles', required)
     br
-    label  Internacion
-      input(type='checkbox', name='internacion')
+
+    label
+      | Internacion
+      input#internacion(type='checkbox', name='internacion')
     br
+
     input(type='hidden', name='paciente', value=paciente.id)
+    br
+
+    //- Este div será ocultado o mostrado según el checkbox
+    div#habitacion-select(style='display: none;')
+      label Habitacion:
+      select(name='habitacion', required)
+        option(value='') Selecciona una habitacion
+        each habitacion in habitaciones
+          option(value=habitacion.camaId)= habitacion.numero
+      br
+
     button(type='submit') Registrar
-    
-    
 
   if error
     p(style='color: red;') #{error}
 
   if success
     p(style='color: green;') #{success}
+
+  //- JavaScript para mostrar/ocultar el select de habitación
+  script.
+    document.addEventListener('DOMContentLoaded', function () {
+      const internacionCheckbox = document.getElementById('internacion');
+      const habitacionSelectDiv = document.getElementById('habitacion-select');
+      const habitacionSelect = habitacionSelectDiv.querySelector('select');
+
+      function toggleHabitacionSelect() {
+        if (internacionCheckbox.checked) {
+          habitacionSelectDiv.style.display = 'block';
+          habitacionSelect.setAttribute('required', 'required');
+        } else {
+          habitacionSelectDiv.style.display = 'none';
+          habitacionSelect.removeAttribute('required');
+          habitacionSelect.selectedIndex = 0; // Limpiar selección
+        }
+      }
+
+      internacionCheckbox.addEventListener('change', toggleHabitacionSelect);
+      toggleHabitacionSelect(); // Ejecutar al cargar
+    });
+
+
+

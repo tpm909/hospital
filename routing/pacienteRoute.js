@@ -11,7 +11,6 @@ router.get('/ingreso',pacienteController.inicio)
 router.post('/ingreso',pacienteController.buscarRedirect)
 router.get('/ingreso/:DNI/crear',pacienteController.buscar)
 router.post('/ingreso/:DNI/crear',ingresoController.crear)
-router.get('/historial',pacienteController.historial)
 router.get('/ver',pacienteController.ver)
 
 

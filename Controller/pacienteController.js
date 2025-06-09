@@ -4,21 +4,23 @@ const Seguro = require("../Model/Seguros")
 const Sintomas = require("../Model/Sintomas")
 const Tipo_ingreso = require("../Model/Tipo_ingreso")
 const Internacion = require("../Model/internacion")
-
-const {Op} = require('sequelize')
 const Ingreso = require("../Model/ingreso")
 const Tratamientos = require("../Model/Tratamientos")
 const Enfermedades = require("../Model/enfermedades")
+const Diagnosticos = require("../Model/Diagnostico")
+
+const { Op } = require('sequelize')
+
 
 
 // *funcion para cargar un paciente
 async function crear(req, res) {
     const paciente = req.body   //recibo un req y lo guardo en una variable recivo esto:paciente=[nombre='algo',DNI='algo',sexo='algo',fecha_nacimiento='algo',nombre='algo',telefono='algo',email='algo',dirreccion='algo',seguro='algo' ]
-//verifica que esten todos los datos
-    if (!paciente.nombre || !paciente.DNI || !paciente.sexo || !paciente.fecha_nacimiento) {        
-        return res.status(400).render('pacientes/formulario',{
+    //verifica que esten todos los datos
+    if (!paciente.nombre || !paciente.DNI || !paciente.sexo || !paciente.fecha_nacimiento) {
+        return res.status(400).render('pacientes/formulario', {
             error: 'todos los campos son obligatorios'
-            
+
         })
     }
 
@@ -36,38 +38,39 @@ async function crear(req, res) {
                 error: 'el paciente ya existe',
                 seguros
             })
-        } else{
+        } else {
 
-         const contacto = await Contacto.create(paciente) //crea un contacto y lo guarda en una constante
-         paciente.Contacto_id = contacto.id //agrega el id del contacto recien creado al paciente que vamos a crear
-         
+            const contacto = await Contacto.create(paciente) //crea un contacto y lo guarda en una constante
+            paciente.Contacto_id = contacto.id //agrega el id del contacto recien creado al paciente que vamos a crear
 
-        await Paciente.create(paciente)     //crea el paciente con esta variable ignorando los datos que no son necesarios:paciente=[nombre='algo',DNI='algo',sexo='algo',fecha_nacimiento='algo',nombre='algo',telefono='algo',email='algo',dirreccion='algo',Seguro_id='algo',Contacto_id ]   
-        
-        res.redirect('/pacientes')}
+
+            await Paciente.create(paciente)     //crea el paciente con esta variable ignorando los datos que no son necesarios:paciente=[nombre='algo',DNI='algo',sexo='algo',fecha_nacimiento='algo',nombre='algo',telefono='algo',email='algo',dirreccion='algo',Seguro_id='algo',Contacto_id ]   
+
+            res.redirect('/pacientes')
+        }
 
     } catch (error) {
         console.error(error);
-    res.status(500).render('pacientes/formulario', {
-      error: 'Error al crear el paciente'
-    });
+        res.status(500).render('pacientes/formulario', {
+            error: 'Error al crear el paciente'
+        });
     }
 }// funcion para cargar un paciente*
 
 
 
 async function Listar(req, res) {
-    try{
+    try {
         const pacientes = await Paciente.findAll({
             include: [
-                {model: Contacto},
-                {model: Seguro}
+                { model: Contacto },
+                { model: Seguro }
             ]
         })
-        res.render('pacientes/lista',{ pacientes })
+        res.render('pacientes/lista', { pacientes })
     } catch (error) {
         console.error(error)
-        res.status(500).render("pacientes/lista",{
+        res.status(500).render("pacientes/lista", {
             error: "error al listar"
         })
     }
@@ -76,159 +79,186 @@ async function Listar(req, res) {
 async function formulario(req, res) {
     try {
         const seguros = await Seguro.findAll()
-    res.render('pacientes/formulario',{ seguros })    
+        res.render('pacientes/formulario', { seguros })
     } catch (error) {
         console.error(error)
-        res.status(500).render('pacientes/formulario',{
-            seguros : [],
+        res.status(500).render('pacientes/formulario', {
+            seguros: [],
             error: 'error al cargar los seguros'
         })
     }
-  
+
 }
 
 async function inicio(req, res) {
-    res.render('ingreso/inicio')    
+    res.render('ingreso/inicio')
 }
 
-async function buscarRedirect(req, res) {    
+async function buscarRedirect(req, res) {
     const dni = req.body.DNI
-    try{
+    try {
         const paciente = await Paciente.findOne({
-            where:{
+            where: {
                 dni
             },
             include: [
-                {model: Contacto},
-                {model: Seguro}
+                { model: Contacto },
+                { model: Seguro }
             ]
-        })        
-        
+        })
+
         if (!paciente) {
-      return res.status(404).render("ingreso/inicio", {
-        error: "Paciente no encontrado"
-      });
-    }
+            return res.status(404).render("ingreso/inicio", {
+                error: "Paciente no encontrado"
+            });
+        }
 
         res.redirect(`/pacientes/ingreso/${dni}/crear`);
     } catch (error) {
         console.error(error)
-        res.status(500).render("ingreso/inicio",{
+        res.status(500).render("ingreso/inicio", {
             error: "paciente no encontrado"
         })
     }
 }
 
-async function buscar(req, res) {    
+async function buscar(req, res) {
     const dni = req.params.DNI
-    
-    try{
+
+    try {
         const paciente = await Paciente.findOne({
-            where:{
+            where: {
                 dni
             },
             include: [
-                {model: Contacto},
-                {model: Seguro}
+                { model: Contacto },
+                { model: Seguro }
             ]
         })
         const sintomas = await Sintomas.findAll()
         const TI = await Tipo_ingreso.findAll()
-        
-        res.render('ingreso/Ingreso',{ paciente,sintomas,TI})
+
+        res.render('ingreso/Ingreso', { paciente, sintomas, TI })
     } catch (error) {
         console.error(error)
-        res.status(500).render("ingreso/inicio",{
+        res.status(500).render("ingreso/inicio", {
             error: "paciente no encontrado"
         })
     }
 }
 
 
-async function historial(req,res) {
+async function historial(id) {
+
+
+    try {
+        const paciente = await Paciente.findOne(
+            {
+                where: {
+                    id: id
+                }
+            }
+        )
+
+        if (!paciente) {
+            return { error: "paciente no encontrado" }
+        }
+
+        const ingresos = await Ingreso.findAll(
+            {
+                where: { id_paciente: id },
+                include: [
+                    { model: Tipo_ingreso }
+                ]
+            }
+        )
+
+        
+        const diagnosticos = await Diagnosticos.findAll(
+            {
+                where: { paciente_id: id }
+            }
+        )
+
+        const id_diagnosticos = [...new Set(diagnosticos.map(c => c.id))]
+
+        const internaciones = await Internacion.findAll(
+            {
+                where: {diagnostico_id: id_diagnosticos}
+            }
+        )
+
+
+        return { ingresos, paciente }
+
+    } catch (error) {
+        console.error(error)
+
+        return error
+    }
+
+
+
+}
+
+async function editar(req, res) {
+    const paciente = req.body
+
+    try {
+        Contacto.update(
+            {
+                telefono: paciente.contacto.telefono,
+                email: paciente.contacto.email,
+                direccion: paciente.contacto.direccion
+            }, {
+            where: paciente.contacto.id
+        }
+        )
+
+        Paciente.update(
+            {
+                nombre: paciente.nombre
+            },
+            {
+                where: paciente.id
+            }
+        )
+        res.redirect('/pacientes')
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('pacientes', {
+            error: 'Error al crear el paciente'
+        });
+    }
+
+}
+
+async function ver(req, res) {
     const id = req.query.id
+
 
     try {
         const paciente = await Paciente.findOne({
-            where:{
-                id
-            }
+            where: { id }
         })
 
-       const ingresos = await Ingreso.findAll({
-        where: {id_paciente: id},
-        include: [
-            {model: Tipo_ingreso}
-        ]
-       })
+        const data = await historial(id);
+        const ingresos = data.ingresos
 
-      
-      
-      res.render("pacientes/historial",{ ingresos,paciente })
+
+
+        res.render('pacientes/paciente', { paciente, ingresos })
     } catch (error) {
-         console.error(error)
-        res.status(500).render("ingreso/inicio",{
-            error: "paciente no encontrado"
-        })
+        console.error(error);
+        res.status(500).render('pacientes', {
+            error: 'Error al encontrar el paciente'
+        });
     }
 
-    
-    
-}
-
-async function editar(req,res) {
-    const paciente = req.body
-
-try {
-     Contacto.update(
-        {
-            telefono:paciente.contacto.telefono,
-            email: paciente.contacto.email,
-            direccion: paciente.contacto.direccion
-        },{
-            where: paciente.contacto.id
-        }
-    )
-
-  Paciente.update(
-    {
-        nombre: paciente.nombre
-    },
-    {
-        where: paciente.id
-    }
-  )
-res.redirect('/pacientes')
-
-} catch (error) {
-     console.error(error);
-    res.status(500).render('pacientes', {
-      error: 'Error al crear el paciente'
-    });
-}    
-   
-}
-
-async function ver(req,res) {
- const id = req.query.id
 
 
-try {
-    const paciente = await Paciente.findOne({
-    where:{id}
- })
 
- res.render('pacientes/paciente',{paciente})
-} catch (error) {
-    console.error(error);
-    res.status(500).render('pacientes', {
-      error: 'Error al encontrar el paciente'
-    });
-}
-
- 
-
-    
 }
 
 
@@ -242,5 +272,5 @@ module.exports = {
     buscarRedirect,
     historial,
     ver
-    
+
 }

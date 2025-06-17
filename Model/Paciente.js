@@ -10,7 +10,7 @@ Paciente.init(
         nombre: {
             type:DataTypes.STRING
         },
-        DNI: {
+        dni: {
             type:DataTypes.INTEGER
         },sexo: {
             type:DataTypes.STRING,            

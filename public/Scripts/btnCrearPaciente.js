@@ -15,7 +15,7 @@ btn.addEventListener("click",(e) =>{
 })
 
 regBtn.addEventListener("click", ()=>{
-    window.location.href = "/pacientes/nuevo"
+    window.location.href = "/pacientes/nuevo?ingreso=1"
 })
 
 }

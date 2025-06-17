@@ -5,5 +5,5 @@ const router = express.Router();
 
 router.get('/', usuariosController.Listar);
 
-
+//esto esta sin implementar
 module.exports = router;

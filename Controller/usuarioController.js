@@ -2,7 +2,7 @@ const Usuario = require("../Model/Usuarios")
 
 const { Op } = require('sequelize');
 
-
+//esto esta sin implementar
 
 async function Listar(req, res) {
     try{

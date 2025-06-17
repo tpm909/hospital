@@ -3,13 +3,15 @@ extends ../layout
 block content
   h1 Registrar nuevo paciente
 
-  form(action='/pacientes/nuevo', method='POST')
+  form#form(action='/pacientes/nuevo', method='POST')
     label Nombre:
-    input(type='text', name='nombre', required)
+    input#nombre(type='text', name='nombre', required)
+    label#nom 
     br
 
     label DNI:
-    input(type='text', name='DNI', required)
+    input#dni(type='text', name='dni', required)
+    label#dn
     br
 
     label Sexo:
@@ -20,19 +22,22 @@ block content
     br
 
     label Fecha de nacimiento:
-    input(type='date', name='fecha_nacimiento', required)
+    input#fechaN(type='date', name='fecha_nacimiento', required)
+    label#fech
     br
 
     label Telefono: 
-    input(type='text', name='telefono', required) 
+    input#telefono(type='text', name='telefono', required)
+    label#tel 
     br
 
     label Email: 
-    input(type='email', name='email', required) 
+    input#email(type='email', name='email', required)
+    label#ema 
     br
 
-    label dirreccion: 
-    input(type='text', name='direccion', required) 
+    label direccion: 
+    input#direccion(type='text', name='direccion', required) 
     br
 
     label Seguro:
@@ -41,13 +46,24 @@ block content
       each seguro in seguros
         option(value=seguro.id)= seguro.nombre
     br
+    input(type='hidden', name='ingreso', value=ingreso)
+    button#btn(type='submit') Registrar
     
-    button(type='submit') Registrar
-    
-    
+   
 
   if error
     p(style='color: red;') #{error}
 
   if success
     p(style='color: green;') #{success}
+
+    select(name='Seguro_id', required)
+      option(value='') Selecciona un seguro
+    if seguros.length
+      each seguro in seguros
+        option(value=seguro.id)= seguro.nombre
+    else
+        option(value='') No hay seguros disponibles
+
+  
+  script(src='/Scripts/formulario.js') 

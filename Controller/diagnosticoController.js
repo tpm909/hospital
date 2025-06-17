@@ -13,8 +13,6 @@ const { Op } = require('sequelize')
 
 async function crear(req, res) {
   const info = req.body
-  console.log(info.paciente);
-  console.log(info.habitacion);
 
   try {
 
@@ -41,7 +39,7 @@ async function crear(req, res) {
         }
       )
 
-      const id_diag = [...new Set(diagnosticos.map(c => c.id))];//sacamos los id
+      const id_diag = [...new Set(diagnosticos.map(c => c.id))];//sacamos los id y se eliminan los duplicados
 
       if (diagnosticos.length === 0) { throw { code: 'NO_DIAGNOSTICO', message: "El paciente no está diagnosticado" }; }//si no hay diagnosticos entoces no podemos internarlo
 
@@ -60,11 +58,6 @@ async function crear(req, res) {
       if (!ultimoingreso) { throw { code: 'NO_INGRESO', message: "El paciente no está ingresado" }; }//retorna un error si no hay al menos un ingreso registrado
 
 
-      console.log(diagnostico.id);
-      console.log(ultimoingreso.id);
-      console.log();
-
-
       const internacion = await Internaciones.create({
         diagnostico_id: diagnostico.id,
         cama_id: info.habitacion,//asigna el id de la cama
@@ -75,9 +68,11 @@ async function crear(req, res) {
       if (!internacion) { throw { code: 'ERROR_AL_CREAR', message: "error al crear la internacion" }; }
 
       await Camas.update(
-        { 
-          ocupada: true },           
-  { where: { id: info.habitacion }
+        {
+          ocupada: true
+        },
+        {
+          where: { id: info.habitacion }
 
         }
       )
@@ -134,13 +129,13 @@ async function camasDisponibles() {
     include: [{ model: Habitaciones }]
   });
 
-  const habitacionesCamasLibres = [...new Set(camasLibres.map(c => c.room_id))];//agarramos el id de las habitaciones con camas libres
+  const habitacionesCamasLibres = [...new Set(camasLibres.map(c => c.habitacion_id))];//agarramos el id de las habitaciones con camas libres
 
 
   const camasOcupadas = await Camas.findAll({//filtramos las camas ocupadas que comparten habitacion con las libres
     where: {
       ocupada: true,
-      room_id: habitacionesCamasLibres
+      habitacion_id: habitacionesCamasLibres
     }
   });
 
@@ -169,24 +164,24 @@ async function camasDisponibles() {
   const habitacionesMismoSexo = new Set();//usamos set para evitar repetidos
   const habitacionesOcupadas = new Set();
 
-  ////////////usamos un bucle forEach para filtrar las habitaciones ocupadas por sexo
+  //////usamos un bucle forEach para filtrar las habitaciones ocupadas por sexo
 
   internaciones.forEach(internacion => {//recoremos con un forEach las internaciones
     const pac = internacion.Diagnostico?.Paciente;//agarramos al paciente del diagnostico que pertenece a la internacion
     const cama = internacion.Cama;//agarramosla cama de la internacion
 
     if (cama) {//vemos si hay una cama
-      habitacionesOcupadas.add(cama.room_id);//agregamos la cama al set de habitacionesOcupadas
+      habitacionesOcupadas.add(cama.habitacion_id);//agregamos la cama al set de habitacionesOcupadas
 
       if (pac && pac.sexo?.toLowerCase() === paciente.sexo?.toLowerCase()) {//revisamos si hay un paciente(en la internacion) y revisamos que el sexo encaje con nuestro paciente
-        habitacionesMismoSexo.add(cama.room_id);//si encaja los agregamos
+        habitacionesMismoSexo.add(cama.habitacion_id);//si encaja los agregamos
       }
     }
   });
 
   ///////filtramos las habitaciones vacias
   const habitacionesVacias = camasLibres
-    .map(c => c.room_id)
+    .map(c => c.habitacion_id)
     .filter(id => !habitacionesOcupadas.has(id));
 
   habitacionesVacias.forEach(id => habitacionesMismoSexo.add(id)); //y las agregamos también
@@ -194,8 +189,8 @@ async function camasDisponibles() {
   /////// Filtramos las camas libres que estén en habitaciones válidas(mismo sexo o vacías)
   const habitacionesMap = new Map();
 
-  camasLibres.forEach(cama => {
-    const habitacionId = cama.room_id;
+  camasLibres.forEach(cama => {//este foreach es para agregar las camas a las habitaciones validas
+    const habitacionId = cama.habitacion_id;
 
     if (
       habitacionesMismoSexo.has(habitacionId) &&

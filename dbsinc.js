@@ -18,7 +18,7 @@ require("./Model/ingreso");
 require("./Model/internacion");
 
 
-(async () => {
+async function syncDatabase() {
   try {
     console.log("Conectando a la base de datos...");
     await sequelize.sync({ force: false }); // true para reiniciar la BD
@@ -26,4 +26,6 @@ require("./Model/internacion");
   } catch (error) {
     console.error("Error en la base de datos:", error);
   }
-})();
+};
+
+module.exports = { syncDatabase };

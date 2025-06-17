@@ -25,7 +25,7 @@ block content
       each paciente in pacientes
         tr
           td #{paciente.nombre}
-          td #{paciente.DNI}
+          td #{paciente.dni}
           td #{paciente.sexo}
           td #{paciente.fecha_nacimiento ? paciente.fecha_nacimiento.toISOString().substring(0,10) : ''}
           td #{paciente.Contacto ? paciente.Contacto.telefono : 'Sin teléfono'}
@@ -36,6 +36,9 @@ block content
             form(action=`/pacientes/ver`, method='get', style='display:inline')
              input(type='hidden', name='id', value=paciente.id)
              button(type='submit') Ver
+             
+
+
 
 
 

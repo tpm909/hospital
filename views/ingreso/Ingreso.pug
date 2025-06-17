@@ -8,14 +8,14 @@ block content
   else if paciente
     ul
       li Nombre: #{paciente.nombre}
-      li DNI: #{paciente.DNI}
+      li DNI: #{paciente.dni}
       li Sexo: #{paciente.sexo}
       li Fecha de nacimiento: #{paciente.fecha_nacimiento}
       li Telefono: #{paciente.Contacto ? paciente.Contacto.telefono : 'sin telefono'}
       li Email: #{paciente.Contacto ? paciente.Contacto.email : 'sin Email'}
-      li Direccion: #{paciente.Contacto ? paciente.Contacto.dirreccion : 'sin Direccion'}
+      li Direccion: #{paciente.Contacto ? paciente.Contacto.direccion : 'sin Direccion'}
       li Seguro: #{paciente.Seguro ? paciente.Seguro.nombre : 'Sin seguro'}
-  form(action=`/pacientes/ingreso/${dni}/crear`, method='POST') 
+  form(action=`/ingreso/crear`, method='POST') 
 
    input(type='hidden', name='idp', value=paciente.id)
    

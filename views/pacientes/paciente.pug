@@ -8,9 +8,9 @@ block content
   else if paciente
     ul
       li Nombre: #{paciente.nombre}
-      li DNI: #{paciente.DNI}
+      li DNI: #{paciente.dni}
       li Sexo: #{paciente.sexo}
-      li Fecha de nacimiento: #{paciente.fecha_nacimiento}
+      li Fecha de nacimiento: #{paciente.fecha_nacimiento ? paciente.fecha_nacimiento: 'fecha desconocida'}
       li Telefono: #{paciente.Contacto ? paciente.Contacto.telefono : 'sin telefono'}
       li Email: #{paciente.Contacto ? paciente.Contacto.email : 'sin Email'}
       li Direccion: #{paciente.Contacto ? paciente.Contacto.dirreccion : 'sin Direccion'}
@@ -48,18 +48,25 @@ block content
            td #{ingreso.createdAt}
            td #{ingreso.usuario}
            td #{ingreso.Tipos_ingreso.nombre}
-
+ 
   //tabla de internaciones
   table#tablaInternaciones.display(style='display: none;')
     thead
       tr
-        th Otro campo 1
-        th Otro campo 2
+        th habitacion
+        th diagnostico 
+        th Estado
+        th 
     tbody
-      // Aquí podrías tener otros datos
-      tr
-        td Valor 1
-        td Valor 2
+      if internaciones && internaciones.length 
+        each internacion in internaciones
+          tr
+            td #{internacion.Cama.habitacion_id}
+            td #{internacion.Diagnostico.detalles}
+            td #{internacion.estado}
+            td
+              if internacion.estado
+              button.btn.btn-success(onclick=`hacerAlgo(${internacion.id})`) Alta 
 
   //tabla de diagnosticos
   table#tablaDiagnosticos.display(style='display: none;')
@@ -70,11 +77,12 @@ block content
         th Enfermedad 
 
     tbody
-      // Aquí podrías tener otros datos
-      tr
-        td Valor 1
-        td Valor 2
-        td Valor 3        
+      if diagnosticos && diagnosticos.length 
+        each Diagnostico in diagnosticos
+          tr
+            td #{Diagnostico.Usuario ? Diagnostico.Usuario.nombre : 'no hay usuario'}
+            td #{Diagnostico.Tratamiento ? Diagnostico.Tratamiento.descripcion : 'no hay tratamiento'}
+            td #{Diagnostico.Enfermedade ? Diagnostico.Enfermedade.nombre : 'no hay enfermedades'}       
 
 
 

@@ -23,7 +23,7 @@ Camas.init(
 }
 )
 //una habitacion tiene muchas camas y una cama tiene solo 1 habitacion
-Habitacion.hasMany(Camas,{foreignKey: 'room_id'})
-Camas.belongsTo(Habitacion,{foreignKey: 'room_id'})
+Habitacion.hasMany(Camas,{foreignKey: 'habitacion_id'})
+Camas.belongsTo(Habitacion,{foreignKey: 'habitacion_id'})
 
 module.exports = Camas

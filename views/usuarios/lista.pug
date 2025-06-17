@@ -1,25 +1,4 @@
 extends ../layout
 
 block content
-  h1 Usuarios
-  a(href='/usuarios/nuevo') Nuevo usuario
-  table(style='border-collapse: collapse;')
-    thead
-      tr
-        th(style='border: 1px solid #000;') Nombre
-        th(style='border: 1px solid #000;') Contraseña
-        th(style='border: 1px solid #000;') Departameto
-
-    tbody
-      each usuario in usuarios
-        tr
-          td(style='border: 1px solid #000;') #{usuario.nombre}
-          td(style='border: 1px solid #000;') #{usuario.contraseña}
-          td(style='border: 1px solid #000;') #{usuario.dep_id}
-          td(style='border: 1px solid #000;')
-            form(action=`/usuarios/${usuario.id}/prestamos`, method='get', style='display:inline')
-              button(type='submit') Ver préstamos
-            form(action=`/usuarios/${usuario.id}/cantidad`, method='get', style='display:inline')
-              button(type='submit') Cantidad de libros prestados
-  if error
-    p(style='color: red;') #{error}
+  h1 Usuarios: esto esta sin implementar

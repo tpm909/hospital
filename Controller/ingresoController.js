@@ -2,6 +2,7 @@ const Paciente = require("../Model/Paciente")
 const Ingreso = require("../Model/ingreso")
 const Tipo_ingreso = require("../Model/Tipo_ingreso")
 const Sintomas = require("../Model/Sintomas")
+const pacienteC = require("../Controller/pacienteController")
 
 const {Op} = require('sequelize')
 
@@ -33,6 +34,30 @@ res.render('ingreso/inicio')
     
 }
 
+async function buscar(req, res) {
+    const dni = req.body.dni
+    
+    try {
+        const data = await pacienteC.busqueda(dni)
+        const paciente = data.paciente
+        const sintomas = data.sintomas
+        const TI = data.TI
+
+        res.render('ingreso/Ingreso', { paciente, sintomas, TI })
+    } catch (error) {
+        console.error(error)
+        res.status(500).render("ingreso/inicio", {
+            error: "paciente no encontrado"
+        })
+    }
+}
+
+async function ingreso(req, res) {
+    res.render('ingreso/inicio')
+}
+
 module.exports = {
-    crear
+    crear,
+    ingreso,
+    buscar
 }

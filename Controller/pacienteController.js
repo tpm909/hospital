@@ -232,14 +232,19 @@ async function ver(req, res) {
 
     try {
         const paciente = await Paciente.findOne({
-            where: { id }
+            where: { id },
+            include:[
+                {model: Contacto},
+                {model: Seguro}
+            ]
         })
 
         const data = await historial(id);
         const ingresos = data.ingresos
         const internaciones = data.internaciones
         const diagnosticos = data.diagnosticos
-
+    
+        
 
         res.render('pacientes/paciente', { paciente, ingresos, internaciones, diagnosticos })
     } catch (error) {

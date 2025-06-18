@@ -3,8 +3,6 @@ const sequelize = require('../Model/db');
 const Contacto = require('../Model/Contacto');
 const Seguro = require('../Model/Seguros');
 const Paciente = require('../Model/Paciente');
-const Usuario = require('../Model/Usuarios');
-const Departamento = require('../Model/Departamento');
 const TipoIngreso = require('../Model/Tipo_ingreso');
 const Ingreso = require('../Model/ingreso');
 const Sintoma = require('../Model/Sintomas');
@@ -20,7 +18,7 @@ const Ala = require('../Model/Ala');
   try {
     await sequelize.sync({ force: true });
 
-    // Datos base para seguros, contactos, usuarios, etc.
+    // Datos base para seguros, contactos, etc.
     const segurosData = [
       { nombre: 'SaludPlus' },
       { nombre: 'MedicoRed' },
@@ -46,16 +44,6 @@ const Ala = require('../Model/Ala');
       { nombre: 'Luis Martínez', dni: 56789012, sexo: 'M', fecha_nacimiento: new Date('1980-03-25'), contactoIndex: 4, seguroIndex: 4 }
     ];
 
-    const departamento = await Departamento.create({ nombre: 'Clínica General' });
-
-    const usuariosData = [
-      { nombre: 'Dr. López', contraseña: '1234', dep_id: departamento.id },
-      { nombre: 'Dra. García', contraseña: 'abcd', dep_id: departamento.id },
-      { nombre: 'Dr. Fernández', contraseña: 'pass', dep_id: departamento.id },
-      { nombre: 'Dra. Martínez', contraseña: 'qwer', dep_id: departamento.id },
-      { nombre: 'Dr. Gómez', contraseña: 'zxcv', dep_id: departamento.id }
-    ];
-    const usuarios = await Usuario.bulkCreate(usuariosData);
 
     const tipoIngreso = await TipoIngreso.create({
       nombre: 'Urgencia',
@@ -103,13 +91,13 @@ const Ala = require('../Model/Ala');
     // Crear ingresos, diagnósticos, internaciones, camas, habitaciones y alas
     for (let i = 0; i < pacientes.length; i++) {
       const paciente = pacientes[i];
-      const usuario = usuarios[i % usuarios.length];
+      
       const sintoma = sintomas[i % sintomas.length];
       const enfermedad = enfermedades[i % enfermedades.length];
       const tratamiento = tratamientos[i % tratamientos.length];
 
       const ingreso = await Ingreso.create({
-        id_usuario: usuario.id,
+        
         id_paciente: paciente.id,
         id_TI: tipoIngreso.id
       });
@@ -120,7 +108,7 @@ const Ala = require('../Model/Ala');
         detalles: `Diagnóstico para ${paciente.nombre}`,
         enfermedad_id: enfermedad.id,
         tratamiento_id: tratamiento.id,
-        usuario_id: usuario.id,
+       
         paciente_id: paciente.id
       });
 

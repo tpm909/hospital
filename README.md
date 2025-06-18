@@ -71,16 +71,17 @@ sequelize:es una ORM (Object-Relational Mapping) que permite interactuar con bas
 //INSTALACION//
 
 paso 1 
-clonar el repositorio git: https://github.com/tpm909/hospital
+clonar el repositorio git:``` https://github.com/tpm909/hospital```
 
 paso 2 
 abrir la carpeta raiz del projecto "hospital" desde un editor de codigo (ej visual code)
-ejecutar en la consola el siguiente comando: npm install
+ejecutar en la consola el siguiente comando: ```npm install```
 eso instalaria todas las dependencias
 
 paso 3 
-crear .env en la carpeta del projecto
+crear ```.env``` en la carpeta del projecto
 con estos datos:
+```
 DB_NAME=hospitalbd
 DB_USER=root
 DB_PASSWORD=
@@ -88,12 +89,13 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_DIALECT=mysql
 DB_LOGGING=false
+```
 
-paso opcional ejecutar el comando: node seeders/seed.js
+paso opcional ejecutar el comando: ```node seeders/seed.js```
 para cargar una seed
 
 paso 4
-para ejecutar el projecto escriba : node app.js
+para ejecutar el projecto escriba : ```node app.js```
 
 paso 5
 

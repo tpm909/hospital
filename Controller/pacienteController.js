@@ -94,7 +94,7 @@ async function formulario(req, res) {
     const ingreso = req.query.ingreso
     try {
         const seguros = await Seguro.findAll()
-        console.log(seguros);
+
         
         res.render('pacientes/formulario', { seguros, ingreso })
     } catch (error) {

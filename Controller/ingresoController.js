@@ -23,7 +23,7 @@ if ( Array.isArray(info.sintomas) && info.sintomas && info.sintomas.length > 0) 
       await ingreso.addSintomas(sintomasId)
     }
 
-res.render('ingreso/inicio')
+res.redirect(`/pacientes/ver?id=${info.idp}`)
  }catch(error){
     console.error(error)
     res.status(500).render('ingreso/inicio',{

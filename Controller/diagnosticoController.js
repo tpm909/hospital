@@ -26,7 +26,6 @@ async function crear(req, res) {
     const diagnostico = await Diagnostico.create(diag)//crea el diagnostico
 
     if (info.internacion) {
-      console.log(info.habitacion);
 
 
       ////verificamos si estan todas las condiciones para internar a alguien

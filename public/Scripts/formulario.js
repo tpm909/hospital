@@ -34,7 +34,7 @@ function Vtel() {
     }else {
 
         telF.textContent = "ingrese un telefono con 10 digitos"
-        console.log("sss");
+
         return false
     }
 
@@ -97,7 +97,7 @@ function Vfecha() {
     fechaF.textContent = ""
     const fechaS = new Date(fecha.value)
     const hoy = new Date()
-    console.log(fechaS);
+
     
 
 

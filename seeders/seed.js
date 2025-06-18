@@ -91,13 +91,13 @@ const Ala = require('../Model/Ala');
     // Crear ingresos, diagnósticos, internaciones, camas, habitaciones y alas
     for (let i = 0; i < pacientes.length; i++) {
       const paciente = pacientes[i];
-      const usuario = usuarios[i % usuarios.length];
+      
       const sintoma = sintomas[i % sintomas.length];
       const enfermedad = enfermedades[i % enfermedades.length];
       const tratamiento = tratamientos[i % tratamientos.length];
 
       const ingreso = await Ingreso.create({
-        id_usuario: usuario.id,
+        
         id_paciente: paciente.id,
         id_TI: tipoIngreso.id
       });
@@ -108,7 +108,7 @@ const Ala = require('../Model/Ala');
         detalles: `Diagnóstico para ${paciente.nombre}`,
         enfermedad_id: enfermedad.id,
         tratamiento_id: tratamiento.id,
-        usuario_id: usuario.id,
+       
         paciente_id: paciente.id
       });
 
